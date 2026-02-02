@@ -12,7 +12,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             overflow: hidden;
         }
 
@@ -109,14 +109,25 @@
 </div>
 
 <!-- 🎵 Musique -->
-<audio id="music" src="music.mp3"></audio>
+<audio id="music" src="music.mp3" preload="auto" loop></audio>
 
 <script>
     const yesBtn = document.getElementById("yes");
     const noBtn = document.getElementById("no");
     const music = document.getElementById("music");
 
-    // 😈 Bouton NON qui fuit la souris
+    let musicStarted = false;
+
+    // 🎵 Démarrage musique dès le premier contact (iPhone safe)
+    document.addEventListener("click", () => {
+        if (!musicStarted) {
+            music.volume = 0.5; // 50%
+            music.play();
+            musicStarted = true;
+        }
+    }, { once: true });
+
+    // 😈 Bouton NON qui fuit
     noBtn.addEventListener("mouseenter", () => {
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -130,21 +141,18 @@
         const celebration = document.getElementById("celebration");
         celebration.style.display = "flex";
 
-        // 🎵 musique avec montée progressive
-        music.volume = 0;
-        music.play();
-
-        let volume = 0;
-        const fadeIn = setInterval(() => {
-            volume += 0.05;
+        // 📈 Crescendo TRÈS lent
+        let volume = music.volume;
+        const crescendo = setInterval(() => {
+            volume += 0.01;
             if (volume >= 1) {
                 volume = 1;
-                clearInterval(fadeIn);
+                clearInterval(crescendo);
             }
             music.volume = volume;
-        }, 200);
+        }, 300);
 
-        // 📱 vibration (iPhone)
+        // 📱 vibration iPhone
         if (navigator.vibrate) {
             navigator.vibrate([200, 100, 200, 100, 400]);
         }
