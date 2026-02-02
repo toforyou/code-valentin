@@ -1,10 +1,38 @@
 !DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Test</title>
-</head>
-<body>
-  <h1>Ça marche ❤️</h1>
-</body>
-</html>
+<script>
+    let yesBtn = document.getElementById("yes");
+    let noBtn = document.getElementById("no");
+    let yesSize = 1.5;
+
+    noBtn.addEventListener("click", () => {
+        yesSize += 0.6;
+        yesBtn.style.fontSize = yesSize + "em";
+
+        let noSize = Math.max(0.5, 2.5 - yesSize);
+        noBtn.style.fontSize = noSize + "em";
+
+        if (yesSize > 6) {
+            yesBtn.style.position = "fixed";
+            yesBtn.style.top = "0";
+            yesBtn.style.left = "0";
+            yesBtn.style.width = "100vw";
+            yesBtn.style.height = "100vh";
+            yesBtn.style.borderRadius = "0";
+        }
+    });
+
+    yesBtn.addEventListener("click", () => {
+        document.getElementById("main").style.display = "none";
+        let celebration = document.getElementById("celebration");
+        celebration.style.display = "flex";
+
+        for (let i = 0; i < 120; i++) {
+            let confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.left = Math.random() * 100 + "vw";
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+            confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 70%)`;
+            celebration.appendChild(confetti);
+        }
+    });
+</script>
