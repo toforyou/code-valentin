@@ -145,8 +145,8 @@
         let volume = music.volume;
         const crescendo = setInterval(() => {
             volume += 0.01;
-            if (volume >= 1) {
-                volume = 1;
+            if (volume >= 0.8) {
+                volume = 0.8;
                 clearInterval(crescendo);
             }
             music.volume = volume;
@@ -171,3 +171,4 @@
 
 </body>
 </html>
+
